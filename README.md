@@ -1,45 +1,106 @@
-# Phân tích và Dự báo Xu hướng Giá bạc Việt Nam (Phase 1-3)
-**Domain:** Finance (Tài chính)  
-**Thời gian phân tích:** 01/2023 - 01/2025 (2 năm)
+# 🥈 SILVER PROJECT: Vietnam Silver Price Analysis & Prediction (2023-2025)
 
-Dự án này là Đồ án môn học phân tích dữ liệu, được chia làm 3 Phase từ cơ bản đến nâng cao (Sử dụng Python, Pandas, Web Scraping, REST API và ReactJS).
+[![Python](https://img.shields.io/badge/Python-3.12+-blue.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Flask](https://img.shields.io/badge/Flask-Web_API-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
+[![Pandas](https://img.shields.io/badge/Pandas-Data_Analysis-150458?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org/)
 
-## 🚀 Tính Năng Chính
-### Phase 1 & 2: Core Variables & Data Structures (Python Basics)
-*   Quy đổi tự động USD/oz sang VND/lượng.
-*   Tính toán điểm hòa vốn và kiểm định rủi ro tỷ giá (Spread Risk).
-*   Sử dụng vòng lặp (List) vẽ biểu đồ các thương hiệu nội địa, Tuple đóng hằng số và Set để tìm khoảng giao/hợp các ngày biến động giá mạnh.
+## 📖 Project Overview
+Silver Project is a comprehensive solution designed to track, analyze, and forecast silver price trends in the Vietnamese market from 2023 to 2025. It combines the power of **Web Scraping**, **Data Analysis (Jupyter/Pandas)**, and a **Web Application (React/Flask)** to provide valuable insights for investors.
 
-### Phase 3: Data Analysis & Visualization (Pandas + Jupyter)
-*   **Web Scraping & API:** Thu thập tỷ giá (`USDVND=X`) và giá bạc T.Giới (`SI=F`) qua thư viện `yfinance`, cào Premium vật chất bằng `BeautifulSoup`.
-*   **Data Processing:** Làm sạch và sinh ra tập dữ liệu 502 ngày giao dịch trong tệp `silver_dataset_2023_2025.csv`.
-*   **Jupyter Notebook:** Toàn bộ phân tích biến động lợi suất (Daily Returns), Mùa vụ (Seasonality) được báo cáo tường minh trong file `backend/Phase3_Analysis.ipynb`.
+---
 
-### Mở rộng (Bonus Frontend React)
-*   Giao diện người dùng chuyên nghiệp (Dark/Silver Mode) với React Vite.
-*   Cung cấp tính năng so sánh Lãi Suất Tiết Kiệm Ngân Hàng vs Đầu Tư Giá Bạc.
-*   Trực quan hóa đồ thị tĩnh (Pandas Line Chart) thành Biểu Đồ Tương Tác Kép với thư viện `recharts`.
-
-## ⚙️ Hướng Dẫn Cài Đặt (Setup & Run)
-**1. Khởi chạy Backend (Dữ liệu API & Crawl):**
-```bash
-cd Project/backend
-pip install -r requirements.txt
-python api.py
+## 📂 Directory Structure
+```text
+PDS301m/
+├── Project/
+│   ├── backend/                # Flask API & Data Processing
+│   │   ├── app/                # Core Logic (Routes, Services)
+│   │   ├── Analysis_Notebook.ipynb # Jupyter Notebook (Detailed Analysis)
+│   │   ├── Analysis_Report.md  # Final Analytical Insights Report
+│   │   └── data_collection.py  # Data scraping and processing script
+│   └── frontend/               # React Vite Application
+│       ├── src/                # Modern User Interface (React)
+│       └── ...
+├── START_PDS.py                # System automation launcher script
+└── README.md                   # Documentation
 ```
 
-**2. Khởi chạy Giao Diện Frontend (React):**
+---
+
+## 🛠️ Technology Stack
+
+### 🔹 Backend & Data Analysis
+- **Language:** Python 3.12+
+- **Key Libraries:** 
+  - `yfinance`: Collect historical data from Yahoo Finance.
+  - `BeautifulSoup4`: Scrape real-time premium data in Vietnam.
+  - `Pandas/NumPy`: Data cleaning, formatting, and time-series analysis.
+  - `Flask`: Serve REST API for the Frontend.
+  - `Jupyter Notebook`: Data science and exploratory data analysis.
+
+### 🔹 Frontend
+- **Framework:** React 19 (Vite)
+- **Styling:** Modern CSS (Glassmorphism & Silver/Dark Mode).
+- **Visualization:** `Recharts` - Interactive Double Line Charts.
+
+---
+
+## 🚀 Quick Start Guide
+
+The easiest way to start both the Backend and Frontend is by using the automated script:
+
 ```bash
-cd Project/frontend
-npm install
-npm run dev
+# In the root directory
+python START_PDS.py
 ```
 
-**3. Khởi chạy Báo Cáo Phân Tích (Jupyter Notebook):**
-Mở tệp `Project/backend/Phase3_Analysis.ipynb` bằng VS Code và chọn "Run All", hoặc chạy lệnh:
-```bash
-cd Project/backend
-jupyter notebook Phase3_Analysis.ipynb
-```
+### Manual run instructions:
 
-> Mọi phân tích chuyên sâu (Insights) đã được đóng thành tệp `Mini_Report_Phase3.md` tại thư mục backend.
+1. **Start the Backend:**
+   ```bash
+   cd Project/backend
+   pip install -r requirements.txt
+   python run.py
+   ```
+
+2. **Start the Frontend:**
+   ```bash
+   cd Project/frontend
+   npm install
+   npm run dev
+   ```
+
+3. **View the Analysis Report:**
+   Open `Project/backend/Analysis_Notebook.ipynb` using VS Code or Jupyter Lab.
+
+---
+
+## 🌐 API Endpoints
+The backend system serves APIs securely on `http://localhost:5000`:
+
+| Endpoint | Method | Description |
+| :--- | :---: | :--- |
+| `/api/silver-price` | `GET` | Get the last 7 days prices and the current live price. |
+| `/api/silver-history` | `GET` | Get 2-year historical data from CSV for charting. |
+
+---
+
+## 💡 Key Insights
+Based on the data analysis from 2023 to 2025, we discovered 5 major insights:
+
+1.  **High Correlation:** Vietnam and Global Silver prices share an almost perfect correlation (~1.0).
+2.  **Investment Risk:** High standard deviation (volatility) indicates silver isn't ideal for highly risk-averse investors due to large daily margins.
+3.  **Seasonality:** Prices historically bottom out around May-June and peak during Q1 & Q4.
+4.  **Local Premium:** Domestic brands maintain a steady premium gap of 500k - 800k VND/tael to ensure liquidity.
+5.  **Caution:** Buying physical silver during strong USD spikes (e.g., inflation news in the US) can cause double unhedged losses.
+
+---
+
+## 👥 Contributors
+- **Trinh Vu** - [trinhhvu](https://github.com/trinhhvu)
+- **Tuan Anh** - [Tani2409](https://github.com/Tani2409)
+
+---
+*Developed as a Data Analysis and Web Application tracking system.*
