@@ -9,16 +9,16 @@ export function convertSilverPrice(usdPerOz, exchangeRate) {
 export function calculateSpread(bidPrice, askPrice) {
   if (askPrice <= bidPrice) {
     return {
-      error: "Giá bán ra phải lớn hơn giá mua vào",
+      error: "Ask price must be generally higher than Bid price depending on the context.",
     };
   }
 
   const spreadValue = askPrice - bidPrice;
   const spreadPercent = (spreadValue / askPrice) * 100;
 
-  let status = "an toan";
+  let status = "safe";
   if (spreadPercent > 5) {
-    status = "rui ro cao";
+    status = "high risk";
   }
 
   return {
@@ -64,12 +64,12 @@ export function compareInvestmentVsBank(capital, silverProfit, bankRateAnnual, m
   
   if (silverProfit > bankProfit) {
     diff = silverProfit - bankProfit;
-    conclusion = `Bạc lời hơn gửi Bank. Chênh: +${diff.toLocaleString('vi-VN')} VND`;
+    conclusion = `Silver > Bank. Diff: +${diff.toLocaleString('en-US')} VND`;
   } else if (silverProfit < bankProfit) {
     diff = bankProfit - silverProfit;
-    conclusion = `Gửi Bank lời hơn Bạc. Chênh: +${diff.toLocaleString('vi-VN')} VND`;
+    conclusion = `Bank > Silver. Diff: +${diff.toLocaleString('en-US')} VND`;
   } else {
-    conclusion = "Hiệu quả tương đương nhau.";
+    conclusion = "Equal performance.";
   }
 
   return {
@@ -81,10 +81,7 @@ export function compareInvestmentVsBank(capital, silverProfit, bankRateAnnual, m
 }
 
 export function calculateBreakEven(purchasePrice, bankRateAnnual, months) {
-  // Lãi suất mục tiêu tương ứng với ngân hàng
   const targetReturnPercent = (bankRateAnnual / 100 / 12) * months;
-  // Giá bán cần thiết = Giá mua * (1 + tỷ lệ lãi ngân hàng)
-  // Lưu ý: Đây là giá bán ra bạn nhận được từ cửa hàng (Bid Price)
   const breakEvenPrice = purchasePrice * (1 + targetReturnPercent);
   const requiredGain = breakEvenPrice - purchasePrice;
 
