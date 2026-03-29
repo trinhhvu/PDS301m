@@ -18,7 +18,7 @@ export default function SilverChart() {
   useEffect(() => {
     fetch('http://localhost:5000/api/silver-history')
       .then(res => {
-        if (!res.ok) throw new Error('Không lấy được dữ liệu lịch sử');
+        if (!res.ok) throw new Error('Failed to fetch historical data');
         return res.json();
       })
       .then(result => {
@@ -29,7 +29,7 @@ export default function SilverChart() {
         }
       })
       .catch(err => {
-        console.error("Lỗi fetch lịch sử:", err);
+        console.error("History fetch error:", err);
         setError(err.message);
       })
       .finally(() => {
@@ -37,21 +37,20 @@ export default function SilverChart() {
       });
   }, []);
 
-  if (loading) return <div style={{ color: 'var(--muted)', textAlign: 'center', padding: '40px' }}>Đang tải biểu đồ lịch sử...</div>;
-  if (error) return <div style={{ color: 'var(--down)', textAlign: 'center', padding: '40px' }}>Lỗi: {error}</div>;
+  if (loading) return <div style={{ color: 'var(--muted)', textAlign: 'center', padding: '40px' }}>Loading historical chart...</div>;
+  if (error) return <div style={{ color: 'var(--down)', textAlign: 'center', padding: '40px' }}>Error: {error}</div>;
   if (data.length === 0) return null;
 
-  // Custom Tooltip để format tiền tệ đẹp hơn
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
         <div style={{ backgroundColor: 'var(--bg-secondary)', padding: '12px', border: '1px solid var(--border)', borderRadius: '8px' }}>
           <p style={{ margin: '0 0 8px 0', color: 'var(--text)', fontWeight: '500' }}>{label}</p>
           <p style={{ margin: '4px 0', color: payload[0].color, fontSize: '12px' }}>
-            VN: {payload[0].value.toLocaleString('vi-VN')} VND/Lượng
+            VN: {payload[0].value.toLocaleString('en-US')} VND/Tael
           </p>
           <p style={{ margin: '4px 0', color: payload[1].color, fontSize: '12px' }}>
-            Thế Giới: {payload[1].value.toLocaleString('vi-VN')} USD/oz
+            Global: {payload[1].value.toLocaleString('en-US')} USD/oz
           </p>
         </div>
       );
@@ -62,10 +61,10 @@ export default function SilverChart() {
   return (
     <>
       <div className="section-header" style={{ marginTop: '32px' }}>
-        <span className="section-title">Biểu Đồ Biến Động Giá (2023 - 2025)</span>
+        <span className="section-title">Price Trend Chart (2023 - 2025)</span>
       </div>
       <p style={{ color: 'var(--muted)', fontSize: '11px', marginBottom: '16px' }}>
-        Tái hiện lịch sử giá gốc Thế giới so với giá Bán ra thực tế tại Việt Nam.
+        Visualizing historical Global Spot Price against Vietnam actual pricing.
       </p>
 
       <div className="table-wrap" style={{ padding: '16px', height: '350px' }}>
@@ -79,7 +78,6 @@ export default function SilverChart() {
               tickMargin={10}
               minTickGap={30}
             />
-            {/* Trục Y trái cho Giá VN */}
             <YAxis 
               yAxisId="left"
               stroke="var(--accent)" 
@@ -87,7 +85,6 @@ export default function SilverChart() {
               tickFormatter={(value) => `${(value / 1000000).toFixed(1)}M`}
               domain={['auto', 'auto']}
             />
-            {/* Trục Y phải cho Giá TG */}
             <YAxis 
               yAxisId="right" 
               orientation="right" 
@@ -102,7 +99,7 @@ export default function SilverChart() {
               yAxisId="left"
               type="monotone" 
               dataKey="vn_price" 
-              name="Giá Bạc VN" 
+              name="VN Price" 
               stroke="var(--accent)" 
               strokeWidth={2} 
               dot={false}
@@ -112,7 +109,7 @@ export default function SilverChart() {
               yAxisId="right"
               type="monotone" 
               dataKey="global_price" 
-              name="Giá TG (USD)" 
+              name="Global (USD)" 
               stroke="var(--muted)" 
               strokeWidth={1.5} 
               dot={false} 

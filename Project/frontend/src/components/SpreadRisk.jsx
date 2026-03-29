@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { calculateSpread } from '../utils/silverLogic';
 
 export default function SpreadRisk() {
-  const [bidPrice, setBidPrice] = useState(1180000); // Giá mua vào
-  const [askPrice, setAskPrice] = useState(1220000); // Giá bán ra
+  const [bidPrice, setBidPrice] = useState(1180000);
+  const [askPrice, setAskPrice] = useState(1220000);
   const [result, setResult] = useState(null);
 
   const handleCalculate = () => {
@@ -14,14 +14,14 @@ export default function SpreadRisk() {
   return (
     <div>
       <div className="section-header" style={{ marginBottom: '16px' }}>
-        <span className="section-title">Đánh giá Rủi Ro Chênh Lệch</span>
+        <span className="section-title">Spread Risk Assessment</span>
       </div>
       <p style={{ color: 'var(--muted)', fontSize: '11px', marginBottom: '24px', letterSpacing: '0.04em' }}>
-        Đánh giá mức độ rủi ro dựa trên độ giãn của giá mua bán.
+        Evaluate the risk level based on the current buy/sell spread margin.
       </p>
 
       <div className="input-group">
-        <label>Giá mua vào (VND/chỉ)</label>
+        <label>Bid Price (VND/chi)</label>
         <input 
           type="number" 
           value={bidPrice} 
@@ -30,7 +30,7 @@ export default function SpreadRisk() {
       </div>
 
       <div className="input-group">
-        <label>Giá bán ra (VND/chỉ)</label>
+        <label>Ask Price (VND/chi)</label>
         <input 
           type="number" 
           value={askPrice} 
@@ -38,7 +38,7 @@ export default function SpreadRisk() {
         />
       </div>
 
-      <button onClick={handleCalculate}>Đánh Giá Rủi Ro</button>
+      <button onClick={handleCalculate}>Evaluate Risk</button>
 
       {result && (
         <div style={{ marginTop: '24px' }}>
@@ -47,14 +47,14 @@ export default function SpreadRisk() {
           ) : (
              <div className="info-row" style={{ borderBottom: 'none', flexDirection: 'column', alignItems: 'flex-start', gap: '8px' }}>
                <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
-                 <span className="info-key">Chênh lệch (Spread):</span>
-                 <span className={`badge ${result.status === 'an toan' ? 'badge-pnj' : 'badge-doji'}`}>
+                 <span className="info-key">Spread diff:</span>
+                 <span className={`badge ${result.status === 'safe' ? 'badge-pnj' : 'badge-doji'}`}>
                     {result.status}
                  </span>
                </div>
                <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'baseline' }}>
                  <span className="info-val" style={{ color: 'var(--accent-light)', fontSize: '18px' }}>
-                   {result.spreadValue.toLocaleString('vi-VN')} VND
+                   {result.spreadValue.toLocaleString('en-US')} VND
                  </span>
                  <span style={{ fontSize: '12px', color: 'var(--muted)' }}>
                    ({result.spreadPercent.toFixed(2)}%)

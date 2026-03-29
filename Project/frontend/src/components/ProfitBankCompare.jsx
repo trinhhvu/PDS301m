@@ -2,16 +2,13 @@ import { useState } from 'react';
 import { compareInvestmentVsBank, calculateBreakEven } from '../utils/silverLogic';
 
 export default function ProfitBankCompare() {
-  const [activeTab, setActiveTab] = useState('compare'); // 'compare' hoặc 'breakeven'
+  const [activeTab, setActiveTab] = useState('compare');
   
-  // States cho So sánh trực tiếp
   const [capital, setCapital] = useState(11800000 * 5 + 12500000 * 2);
   const [silverProfit, setSilverProfit] = useState(1600000);
   
-  // States cho Điểm hòa vốn
-  const [purchasePrice, setPurchasePrice] = useState(1200000); // Giá mua/chi
+  const [purchasePrice, setPurchasePrice] = useState(1200000);
   
-  // Common states
   const [bankRateAnnual, setBankRateAnnual] = useState(5.0);
   const [months, setMonths] = useState(3);
   
@@ -40,39 +37,38 @@ export default function ProfitBankCompare() {
   return (
     <div>
       <div className="section-header" style={{ marginBottom: '16px' }}>
-        <span className="section-title">Phân tích Đầu tư vs Tiết kiệm</span>
+        <span className="section-title">Investment vs Banking Analysis</span>
       </div>
 
-      {/* Tabs giả lập để chọn chế độ */}
       <div style={{ display: 'flex', gap: '8px', marginBottom: '20px' }}>
         <button 
           onClick={() => setActiveTab('compare')}
           className={activeTab === 'compare' ? '' : 'btn-outline'}
           style={{ padding: '6px 16px', fontSize: '11px', minWidth: 'auto' }}
         >
-          So sánh Lợi nhuận
+          Profit Comparison
         </button>
         <button 
           onClick={() => setActiveTab('breakeven')}
           className={activeTab === 'breakeven' ? '' : 'btn-outline'}
           style={{ padding: '6px 16px', fontSize: '11px', minWidth: 'auto' }}
         >
-          Điểm hòa vốn (Break-even)
+          Break-even Target
         </button>
       </div>
 
       {activeTab === 'compare' ? (
         <>
           <p style={{ color: 'var(--muted)', fontSize: '11px', marginBottom: '16px' }}>
-            Đánh giá hiệu quả dựa trên lợi nhuận bạn đã thu được.
+            Evaluate efficiency based on your actual silver profit returns.
           </p>
           <div style={{ display: 'flex', gap: '16px' }}>
             <div className="input-group" style={{ flex: 1 }}>
-              <label>Vốn đầu tư (VND)</label>
+              <label>Capital (VND)</label>
               <input type="number" value={capital} onChange={(e) => setCapital(e.target.value)} />
             </div>
             <div className="input-group" style={{ flex: 1 }}>
-              <label>Lợi nhuận Bạc (VND)</label>
+              <label>Silver Profit (VND)</label>
               <input type="number" value={silverProfit} onChange={(e) => setSilverProfit(e.target.value)} />
             </div>
           </div>
@@ -80,15 +76,14 @@ export default function ProfitBankCompare() {
       ) : (
         <>
           <p style={{ color: 'var(--muted)', fontSize: '11px', marginBottom: '16px' }}>
-            Tính toán xem bạn cần bán giá bao nhiêu để lời hơn gửi ngân hàng.
+            Calculate the target sell price needed to out-perform a bank savings account.
           </p>
           <div className="input-group">
-            <label>Giá lúc bạn mua (VND/chỉ)</label>
+            <label>Buy Price (VND/chi)</label>
             <input 
               type="number" 
               value={purchasePrice} 
               onChange={(e) => setPurchasePrice(e.target.value)} 
-              placeholder="Ví dụ: 1.200.000"
             />
           </div>
         </>
@@ -96,11 +91,11 @@ export default function ProfitBankCompare() {
 
       <div style={{ display: 'flex', gap: '16px' }}>
         <div className="input-group" style={{ flex: 1 }}>
-          <label>Lãi Ngân hàng (%/năm)</label>
+          <label>Bank Term Rate (% / Year)</label>
           <input type="number" value={bankRateAnnual} onChange={(e) => setBankRateAnnual(e.target.value)} step="0.1" />
         </div>
         <div className="input-group" style={{ flex: 1 }}>
-          <label>Kỳ hạn dự kiến (Tháng)</label>
+          <label>Savings Period (Months)</label>
           <input type="number" value={months} onChange={(e) => setMonths(e.target.value)} />
         </div>
       </div>
@@ -109,44 +104,42 @@ export default function ProfitBankCompare() {
         onClick={activeTab === 'compare' ? handleCompare : handleCalculateBE} 
         style={{ marginTop: '16px' }}
       >
-        {activeTab === 'compare' ? 'Phân Tích So Sánh' : 'Tính Giá Hòa Vốn'}
+        {activeTab === 'compare' ? 'Run Analysis' : 'Calculate Break-even'}
       </button>
 
-      {/* Render kết quả So sánh */}
       {activeTab === 'compare' && result && (
         <div className="result-box">
-          <h3 style={{ marginBottom: '16px' }}>Kết quả ({months} tháng):</h3>
+          <h3 style={{ marginBottom: '16px' }}>Results ({months} months):</h3>
           <div className="info-row" style={{ paddingTop: 0 }}>
-            <span className="info-key">Lợi nhuận Bạc</span>
-            <span className="info-val" style={{ color: 'var(--accent-light)' }}>{result.silverProfit.toLocaleString('vi-VN')} VND</span>
+            <span className="info-key">Silver Return</span>
+            <span className="info-val" style={{ color: 'var(--accent-light)' }}>{result.silverProfit.toLocaleString('en-US')} VND</span>
           </div>
           <div className="info-row">
-            <span className="info-key">Lãi Ngân Hàng</span>
-            <span className="info-val">{Math.round(result.bankProfit).toLocaleString('vi-VN')} VND</span>
+            <span className="info-key">Bank Savings Return</span>
+            <span className="info-val">{Math.round(result.bankProfit).toLocaleString('en-US')} VND</span>
           </div>
           <div className="info-row" style={{ borderBottom: 'none', color: result.silverProfit > result.bankProfit ? 'var(--accent)' : 'var(--text)' }}>
-            <span className="info-key" style={{ color: 'inherit' }}>Kết luận:</span>
+            <span className="info-key" style={{ color: 'inherit' }}>Conclusion:</span>
             <span style={{ fontWeight: 500 }}>{result.conclusion}</span>
           </div>
         </div>
       )}
 
-      {/* Render kết quả Hòa vốn */}
       {activeTab === 'breakeven' && beResult && (
         <div className="result-box">
-          <h3 style={{ marginBottom: '16px' }}>Mục tiêu giá bán ({months} tháng):</h3>
+          <h3 style={{ marginBottom: '16px' }}>Target Sell Price ({months} months):</h3>
           <div className="info-row" style={{ paddingTop: 0 }}>
-            <span className="info-key">Lãi suất Bank tương ứng</span>
+            <span className="info-key">Corresponding Bank ROI</span>
             <span className="info-val" style={{ color: 'var(--up)' }}>+{beResult.targetReturnPercent}%</span>
           </div>
           <div className="info-row">
-            <span className="info-key">Giá bán tối thiểu cần đạt</span>
+            <span className="info-key">Required Minimum Target</span>
             <span className="info-val" style={{ color: 'var(--accent-light)', fontSize: '18px' }}>
-              {beResult.breakEvenPrice.toLocaleString('vi-VN')} đ/chỉ
+              {beResult.breakEvenPrice.toLocaleString('en-US')} VND/chi
             </span>
           </div>
           <p style={{ marginTop: '12px', fontSize: '11px', color: 'var(--muted)', fontStyle: 'italic' }}>
-            *Để lời hơn gửi tiết kiệm, bạn cần bán được giá cao hơn mức này (đã tính bù đắp lãi suất ngân hàng).
+            *To outperform a savings account, ensure your exit price exceeds this calculated benchmark.
           </p>
         </div>
       )}
