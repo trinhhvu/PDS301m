@@ -14,8 +14,8 @@ function App() {
   useEffect(() => {
     const tick = () => {
       const now = new Date();
-      setTime(now.toLocaleTimeString('vi-VN', { hour12: false }));
-      setDate(now.toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
+      setTime(now.toLocaleTimeString('en-US', { hour12: false }));
+      setDate(now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
     };
     tick();
     const interval = setInterval(tick, 1000);
@@ -38,23 +38,17 @@ function App() {
         <div className="header-right">
           <span className="last-update">
             <span className="pulse-dot"></span>
-            Cập nhật: <span id="update-time">{time}</span>
+            Updated: <span id="update-time">{time}</span>
           </span>
-          <button className="btn-refresh" onClick={() => window.location.reload()}>↻ Làm mới</button>
+          <button className="btn-refresh" onClick={() => window.location.reload()}>↻ Refresh</button>
         </div>
       </header>
 
       <main>
-
         <LiveTicker />
-
-
         <MarketDashboard />
-
-
         <SilverChart />
-
-
+        
         <div className="bottom-grid">
           <div className="info-panel" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             <PriceConverter />
@@ -67,7 +61,7 @@ function App() {
       </main>
 
       <footer>
-        <p>SILVERTRACK — Bảng giá bạc thời gian thực · Dữ liệu mang tính tham khảo</p>
+        <p>SILVERTRACK — Real-time Silver Prices · Data is for reference only</p>
         <p id="footer-date">{date}</p>
       </footer>
     </>
