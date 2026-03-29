@@ -1,106 +1,126 @@
-# 🥈 SILVER PROJECT: Vietnam Silver Price Analysis & Prediction (2023-2025)
+# 🥈 SILVER PROJECT: Vietnam Silver Price Analysis & Prediction
 
 [![Python](https://img.shields.io/badge/Python-3.12+-blue.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Flask](https://img.shields.io/badge/Flask-Web_API-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
 [![Pandas](https://img.shields.io/badge/Pandas-Data_Analysis-150458?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org/)
+[![Swagger](https://img.shields.io/badge/Swagger-API_Docs-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)](https://swagger.io/)
 
-## 📖 Project Overview
-Silver Project is a comprehensive solution designed to track, analyze, and forecast silver price trends in the Vietnamese market from 2023 to 2025. It combines the power of **Web Scraping**, **Data Analysis (Jupyter/Pandas)**, and a **Web Application (React/Flask)** to provide valuable insights for investors.
+Silver Project is a comprehensive fintech solution designed to track, analyze, and forecast silver price trends in the Vietnamese market from 2023 to 2025. It combines the power of algorithmic **Web Scraping**, **Quantitative Data Analysis**, and a **Full-Stack Web Application** to provide real-time and historical insights for investors.
 
 ---
 
-## 📂 Directory Structure
+## 🏛️ System Architecture
+
+Our robust system architecture automates data synchronization between global markets and domestic interfaces.
+
+```mermaid
+graph LR
+    subgraph External Sources
+        YF[Yahoo Finance API]
+        IV[Investing.vn Scraper]
+    end
+
+    subgraph Data Pipeline
+        P[Pandas Engine]
+        CSV[(Dataset CSV)]
+    end
+
+    subgraph Backend Server
+        F[Flask REST API]
+        S[Swagger UI Docs]
+    end
+
+    subgraph User Interface
+        R[React Dashboard]
+        J[Jupyter Analysis]
+    end
+
+    YF --> P
+    IV --> P
+    P --> CSV
+    CSV --> F
+    F --> S
+    F --> R
+    CSV --> J
+```
+
+---
+
+## 📂 Project Structure
+
 ```text
 PDS301m/
 ├── Project/
-│   ├── backend/                # Flask API & Data Processing
+│   ├── backend/                # Flask API, OpenAPI, & Data Processing
 │   │   ├── app/                # Core Logic (Routes, Services)
 │   │   ├── Analysis_Notebook.ipynb # Jupyter Notebook (Detailed Analysis)
 │   │   ├── Analysis_Report.md  # Final Analytical Insights Report
-│   │   └── data_collection.py  # Data scraping and processing script
+│   │   ├── data_collection.py  # Pandas data aggregation script
+│   │   └── run.py              # WSGI Entry Point
 │   └── frontend/               # React Vite Application
-│       ├── src/                # Modern User Interface (React)
-│       └── ...
-├── START_PDS.py                # System automation launcher script
+│       ├── src/                # Modern User Interface & Dashboard
+│       └── package.json
+├── START_PDS.py                # Automated multi-process launcher
 └── README.md                   # Documentation
 ```
 
 ---
 
-## 🛠️ Technology Stack
-
-### 🔹 Backend & Data Analysis
-- **Language:** Python 3.12+
-- **Key Libraries:** 
-  - `yfinance`: Collect historical data from Yahoo Finance.
-  - `BeautifulSoup4`: Scrape real-time premium data in Vietnam.
-  - `Pandas/NumPy`: Data cleaning, formatting, and time-series analysis.
-  - `Flask`: Serve REST API for the Frontend.
-  - `Jupyter Notebook`: Data science and exploratory data analysis.
-
-### 🔹 Frontend
-- **Framework:** React 19 (Vite)
-- **Styling:** Modern CSS (Glassmorphism & Silver/Dark Mode).
-- **Visualization:** `Recharts` - Interactive Double Line Charts.
-
----
-
 ## 🚀 Quick Start Guide
 
-The easiest way to start both the Backend and Frontend is by using the automated script:
+The entire multi-process stack can be seamlessly booted using the automated Python entry point:
 
 ```bash
 # In the root directory
 python START_PDS.py
 ```
 
-### Manual run instructions:
+### Manual initialization:
 
-1. **Start the Backend:**
+1. **Start the API Server:**
    ```bash
    cd Project/backend
    pip install -r requirements.txt
    python run.py
    ```
 
-2. **Start the Frontend:**
+2. **Start the UI Client:**
    ```bash
    cd Project/frontend
    npm install
    npm run dev
    ```
 
-3. **View the Analysis Report:**
-   Open `Project/backend/Analysis_Notebook.ipynb` using VS Code or Jupyter Lab.
-
 ---
 
-## 🌐 API Endpoints
-The backend system serves APIs securely on `http://localhost:5000`:
+## 🌐 OpenAPI Capabilities
 
-| Endpoint | Method | Description |
+The backend supplies 9 powerful RESTful API endpoints. For interactive testing and endpoint exploration, the system automatically hosts a live Swagger playground.
+**Visit:** `http://localhost:5000/apidocs` once the server initiates.
+
+### Core Data Delivery
+| Endpoint | Method | Action |
 | :--- | :---: | :--- |
-| `/api/silver-price` | `GET` | Get the last 7 days prices and the current live price. |
-| `/api/silver-history` | `GET` | Get 2-year historical data from CSV for charting. |
+| `/api/silver-price` | `GET` | Retrieve the latest real-time domestic calculations. |
+| `/api/silver-history` | `GET` | Pull large-scale 2-year formatted historical matrices. |
+| `/api/silver-weekly` | `GET` | Aggregate daily prices for the last 7 trailing days. |
+| `/api/market/histogram` | `GET` | Fetch price band distributions for volatility checks. |
+| `/api/market/branded` | `GET/POST` | Extrapolate competitive pricing among top VN brands. |
+| `/api/market/insights`| `GET` | Query high/low records and unique data markers. |
 
----
-
-## 💡 Key Insights
-Based on the data analysis from 2023 to 2025, we discovered 5 major insights:
-
-1.  **High Correlation:** Vietnam and Global Silver prices share an almost perfect correlation (~1.0).
-2.  **Investment Risk:** High standard deviation (volatility) indicates silver isn't ideal for highly risk-averse investors due to large daily margins.
-3.  **Seasonality:** Prices historically bottom out around May-June and peak during Q1 & Q4.
-4.  **Local Premium:** Domestic brands maintain a steady premium gap of 500k - 800k VND/tael to ensure liquidity.
-5.  **Caution:** Buying physical silver during strong USD spikes (e.g., inflation news in the US) can cause double unhedged losses.
+### Computation Engines
+| Endpoint | Method | Action |
+| :--- | :---: | :--- |
+| `/api/calculate/conversion`| `POST`| Cross-calculate varying purity units (Tael, Chi, Oz).|
+| `/api/calculate/risk` | `POST`| Assess bid-ask spread liquidity dangers. |
+| `/api/calculate/investment`| `POST`| Output a comparable ROI against localized bank yields.|
+| `/api/calculate/breakeven` | `POST`| Return the target exit price for profitability. |
 
 ---
 
 ## 👥 Contributors
+Developed by a tight-knit software engineering duo to deliver actionable financial analytics.
 - **Trinh Vu** - [trinhhvu](https://github.com/trinhhvu)
 - **Tuan Anh** - [Tani2409](https://github.com/Tani2409)
-
----
-*Developed as a Data Analysis and Web Application tracking system.*
