@@ -4,7 +4,6 @@ from .services.silver_service import SilverService
 def register_routes(app):
     @app.route('/api/silver-price', methods=['GET'])
     def get_silver_price():
-        """Lấy giá 7 ngày qua và giá Live."""
         try:
             weekly = SilverService.get_weekly_price()
             live = SilverService.get_live_data()
@@ -18,7 +17,6 @@ def register_routes(app):
 
     @app.route('/api/silver-history', methods=['GET'])
     def get_silver_history():
-        """Lấy dữ liệu CSV dài hạn cho biểu đồ."""
         try:
             data = SilverService.get_historical_data()
             if data is None:
