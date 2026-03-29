@@ -38,7 +38,8 @@ def main():
     print("\n--- Access URLs ---")
     print("Silver UI: http://localhost:5173")
     if asm: print("Weather App: http://localhost:8503")
-    print("API: http://localhost:5000/api/silver-price")
+    print("API Base: http://localhost:5000/api")
+    print("Swagger UI: http://localhost:5000/apidocs (Test API Here)")
     print("\nPress Ctrl + C to stop all processes.")
 
     try:
