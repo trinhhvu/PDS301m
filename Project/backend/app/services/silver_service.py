@@ -6,7 +6,7 @@ from datetime import datetime
 class SilverService:
     @staticmethod
     def get_weekly_price():
-        """Lấy giá bạc 7 ngày qua từ Yahoo Finance."""
+        """Fetch the last 7 days of silver prices from Yahoo Finance."""
         ticker = "SI=F"
         data = yf.Ticker(ticker).history(period="7d")
         return [
@@ -16,7 +16,7 @@ class SilverService:
 
     @staticmethod
     def get_historical_data():
-        """Lấy dữ liệu từ file CSV lịch sử."""
+        """Retrieve historical data from the local CSV dataset."""
         try:
             base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
             csv_path = os.path.join(base_dir, "silver_dataset_2023_2025.csv")
@@ -24,7 +24,8 @@ class SilverService:
                 return None
             
             df = pd.read_csv(csv_path)
-            df = df.iloc[::5, :] # Lấy cách quãng để biểu đồ mượt hơn
+            # Sample data every 5 days for smoother charting visualization
+            df = df.iloc[::5, :]
             
             return [
                 {
@@ -35,18 +36,19 @@ class SilverService:
                 for _, row in df.iterrows()
             ]
         except Exception as e:
-            print(f"Error reading CSV: {e}")
+            print(f"Error reading historical CSV: {e}")
             return None
 
     @staticmethod
     def get_live_data():
-        """Lấy giá Live (Spot & USD/VND)."""
+        """Fetch live spot price and USD/VND exchange rate."""
         tickers = yf.Tickers('XAGUSD=X USDVND=X')
         try:
             spot = tickers.tickers['XAGUSD=X'].fast_info['last_price']
             usdvnd = tickers.tickers['USDVND=X'].fast_info['last_price']
-        except:
-            spot, usdvnd = 31.0, 25450.0 # Fallback
+        except Exception as e:
+            # Fallback mock values in case of API failure
+            spot, usdvnd = 31.0, 25450.0
             
         local_est_chi = round(spot * 1.20565 * usdvnd / 10, 0)
         return {
